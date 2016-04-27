@@ -5,6 +5,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <stdint.h>
+#include <signal.h>
 
 #define PWM_PIN 1
 #define TURN_RANGE 512

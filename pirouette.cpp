@@ -3,10 +3,7 @@
  *  Piourette is an app to control a spinning camera. 
  *
  */
-
 #include "pirouette.h"
-#include "socket_layer.h"
-#include "controller.h"
 
 using namespace std;
 
@@ -20,6 +17,8 @@ int main(int argc, char** argv) {
 
   //init something to do with GPIO
 	init_GPIO();
+
+  //init thread control?
   
 	int server_socket_fd;
 	server_socket_fd = init_server_socket();
@@ -48,9 +47,5 @@ void accept_connections(int listen_socket_fd) {
     if(connection_message.empty()) {
       continue;
     }
-/*    if(connection_message == "connect") {*/
-      //new thread
-    
-/*    }*/
   }
 }
