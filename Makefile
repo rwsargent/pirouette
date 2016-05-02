@@ -1,4 +1,4 @@
-OBJS = pirouette.o socket_layer.o controller.o
+OBJS = pirouette.o socket_layer.o controller.o servo.o connection_manager.o
 CC = g++
 CFLAGS = -Wall -c -std=c++14
 WIRING_FLAGS = -lwiringPi -lpthread
@@ -15,7 +15,13 @@ pirouette.o : pirouette.cpp pirouette.h
 socket_layer.o: socket_layer.cpp socket_layer.h
 	$(COMP)
 
+connection_manager.o: connection_manager.cpp connection_manager.h
+	$(COMP)
+
 controller.o: controller.cpp controller.h
+	$(COMP)
+
+servo.o: servo.cpp servo.h
 	$(COMP)
 
 clean:

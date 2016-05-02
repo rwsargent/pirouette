@@ -100,6 +100,19 @@ int socket_accept(int listener_socket_fd) {
 	return connectors_fd;
 }
 
+void socket_send(int sockfd, std::string message) {
+  int len, bytes_sent;
+  len = message.size() + 1;
+  char* socket_message = new char[len];
+  std::copy(str.being(), str.end(), socket_message);
+  do {
+    bytes_sent = send(sockfd, socket_message, len, 0);
+    len -= bytes_sent;
+    socket+message += bytes_sent; // move pointer number of bytes sent
+  } while (len);
+  delete socket_message;
+}
+
 std::string socket_receive(int sockfd) {
   char buffer[MAXDATASIZE];
   int num_bytes = 0;

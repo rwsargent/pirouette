@@ -1,8 +1,10 @@
 #ifndef THREAD_MANAGER_H
 #define THREAD_MANAGER_H
+#include "socket_layer.h"
 
+#include <thread>
 #include <vector>
-
+#include <mutex>
 
 #define MAX_CONNECTIONS 4
 

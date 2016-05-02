@@ -44,8 +44,8 @@ void accept_connections(int listen_socket_fd) {
     }
     setsockopt(connection_socket_fd, SOL_SOCKET, SO_RCVTIMEO, (char*)&timeval, sizeof(struct timeval));
     string connection_message = socket_receive(connection_socket_fd);
-    if(connection_message.empty()) {
-      continue;
+    if(!connection_message.empty()) {
+      establish_connection(connection_socket_fd);
     }
   }
 }
