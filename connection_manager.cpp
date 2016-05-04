@@ -16,11 +16,10 @@ void init_connections() {
 void establish_connection(int socket_fd) {
   connection_mutex.lock();
   if(!roomForConnections()) {
-    socket_send(socket_send, "At Max Connections");
+    socket_send(socket_fd, "At Max Connections\n");
     return;
   }
-  connections.push();
+  socket_send(socket_fd, "Accepted\n");
+//  connections.push_back(
   connection_mutex.unlock();
 }
-
-

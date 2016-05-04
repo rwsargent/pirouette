@@ -4,6 +4,28 @@
  */
 #include "socket_layer.h"
 
+void log_error(int socket_fd) {
+  socklen_t len;
+  struct sockaddr_storage addr;
+  char ipstr[INET6_ADDRSTRLEN];
+  int port;
+
+  len = sizeof addr;
+  getpeername(socket_fd, (struct sockaddr*)&addr, &len);
+
+  // deal with both IPv4 and IPv6:
+  if (addr.ss_family == AF_INET) {
+    struct sockaddr_in *s = (struct sockaddr_in *)&addr;
+    port = ntohs(s->sin_port);
+    inet_ntop(AF_INET, &s->sin_addr, ipstr, sizeof ipstr);
+  } else { // AF_INET6
+    struct sockaddr_in6 *s = (struct sockaddr_in6 *)&addr;
+    port = ntohs(s->sin6_port);
+    inet_ntop(AF_INET6, &s->sin6_addr, ipstr, sizeof ipstr);
+  }
+  printf("Error on ip address: %s:%d\n.Error is %d", ipstr, port, errno);
+}
+
 void sigchld_handler(int s) {
   // waitpid() might overwrite errno, so we save and restore it:
   int saved_errno = errno;
@@ -104,11 +126,15 @@ void socket_send(int sockfd, std::string message) {
   int len, bytes_sent;
   len = message.size() + 1;
   char* socket_message = new char[len];
-  std::copy(str.being(), str.end(), socket_message);
+  std::copy(message.begin(), message.end(), socket_message);
   do {
     bytes_sent = send(sockfd, socket_message, len, 0);
+    if(bytes_sent < 0) {
+      log_error(sockfd);
+      return;
+    }
     len -= bytes_sent;
-    socket+message += bytes_sent; // move pointer number of bytes sent
+    socket_message += bytes_sent; // move pointer number of bytes sent
   } while (len);
   delete socket_message;
 }
@@ -126,3 +152,4 @@ std::string socket_receive(int sockfd) {
   std::string message = std::string(buffer);
   return message;
 }
+
