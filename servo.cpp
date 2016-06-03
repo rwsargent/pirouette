@@ -14,9 +14,10 @@ void turn_right() {
   delay(100);
 }
 
-void close_servo(int signal) {
+void close_servo() {
   pwmWrite(PWM_PIN, 0);
   delay(200);
+  std::cout << "Closing servo" << std::endl;
 }
 
 
@@ -29,7 +30,4 @@ void init_GPIO() {
   pwmSetClock(384);
   pwmSetRange(1000);
 
-  (void)signal(SIGINT, close_servo);
-  (void)signal(SIGQUIT, close_servo);
-  (void)signal(SIGTERM, close_servo);
 }

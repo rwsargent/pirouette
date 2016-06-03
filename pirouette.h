@@ -8,6 +8,7 @@
 
 #include<thread>
 #include<atomic>
+#include<stdlib.h>
 
 #include "socket_layer.h"
 #include "servo.h"

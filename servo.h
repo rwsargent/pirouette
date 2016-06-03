@@ -9,13 +9,14 @@
 
 #define PWM_PIN 1
 #define TURN_RANGE 512
-#define STOP 512
+#define STOP 0
 #define LEFT 76
-#define RIGHT 72
+#define RIGHT 71
 
-void turn_left(int);
-void turn_right(int);
+void turn_left();
+void turn_right();
 void init_GPIO();
 void stop();
+void close_servo();
 
 #endif

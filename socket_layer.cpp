@@ -126,6 +126,7 @@ void socket_send(int sockfd, std::string message) {
   int len, bytes_sent;
   len = message.size() + 1;
   char* socket_message = new char[len];
+  char* message_start = socket_message;
   std::copy(message.begin(), message.end(), socket_message);
   do {
     bytes_sent = send(sockfd, socket_message, len, 0);
@@ -136,20 +137,26 @@ void socket_send(int sockfd, std::string message) {
     len -= bytes_sent;
     socket_message += bytes_sent; // move pointer number of bytes sent
   } while (len);
-  delete socket_message;
+  delete message_start;
 }
 
 std::string socket_receive(int sockfd) {
   char buffer[MAXDATASIZE];
   int num_bytes = 0;
-  if ((num_bytes = recv(sockfd, buffer, MAXDATASIZE-1, 0)) == -1) {
+  if ((num_bytes = recv(sockfd, buffer, MAXDATASIZE-1, 0)) == -1) { 
+    if (errno == EAGAIN || errno == EWOULDBLOCK) {
+      return "AGAIN";
+    }
+    printf("Error in recv on socket: %d. Errno: %d\n", sockfd, errno);
     return std::string(); // empty string, nothing recieved
   }
-  if (errno == EAGAIN || errno == EWOULDBLOCK) {
-    return std::string();
-  }
+  printf("Num bytes received: %d\n", num_bytes); 
   buffer[num_bytes] = '\0';
   std::string message = std::string(buffer);
   return message;
+}
+
+void close_socket(int sockfd) {
+  close(sockfd);
 }
 

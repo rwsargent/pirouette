@@ -1,6 +1,6 @@
 OBJS = pirouette.o socket_layer.o controller.o servo.o connection_manager.o
 CC = g++
-CFLAGS = -Wall -c -std=c++14
+CFLAGS = -Wall -c -std=c++14 -g
 WIRING_FLAGS = -lwiringPi -lpthread
 LFLAGS = -Wall -std=c++14
 COMP = $(CC) $(DEBUG) $(CFLAGS) $<
