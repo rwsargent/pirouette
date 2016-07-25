@@ -10,7 +10,7 @@
 #define PWM_PIN 1
 #define TURN_RANGE 512
 #define STOP 0
-#define LEFT 76
+#define LEFT 77
 #define RIGHT 71
 
 void turn_left();
