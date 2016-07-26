@@ -23,10 +23,12 @@ int main(int argc, char** argv) {
   assignSignalHandlers();
   
   //init thread control?
-	server_socket_fd = init_server_socket();
-    
-  accept_thread = thread(accept_connections, server_socket_fd);
-  accept_thread.join();
+	server_socket_fd = init_client_socket(argv[1]);
+  unique_ptr<Client> webserver(new Client);
+  webserver->socketfd = server_socket_fd;
+  
+  listen_for_commands(std::move(webserver));
+  
   return 0;
 }
 

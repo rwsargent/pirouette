@@ -17,13 +17,14 @@
 #include <sys/wait.h>
 #include <signal.h>
 
-#define PORT "3490"
+#define PORT "5676"
 #define BACKLOG 10     // how many pending connections queue will hold
 #define MAXDATASIZE 512
 
-int init_server_socket();
+int init_client_socket(char* host);
 int socket_accept(int listener_socket_fd);
 std::string socket_receive(int sockfd);
 void socket_send(int sockfd, std::string message);
 void close_socket(int sockfd);
+void socket_to_pi_web();
 #endif

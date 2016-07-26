@@ -21,7 +21,7 @@ void listen_for_commands(std::unique_ptr<Client> client) {
       continue;
     }
   }
-  remove_thread(std::this_thread::get_id());
+  // remove_thread(std::this_thread::get_id()); not necessary for single connection
 }
 
 
