@@ -1,3 +1,4 @@
+
 /** Author: Ryan Sargent
  *  This closely follows Beej's Networking guide <https://beej.us/guide/bgnet/> to set up a socket, 
  *  and listen on said socket. 
@@ -134,7 +135,15 @@ std::string socket_receive(int sockfd) {
     printf("Error in recv on socket: %d. Errno: %d\n", sockfd, errno);
     return std::string(); // empty string, nothing recieved
   }
-  printf("Num bytes received: %d\n", num_bytes); 
+  /* TODO: WHY? 
+  for(charIdx = 0; charIdx < num_bytes; charIdx ++) {
+    print_buffer[charIdx] = buffer[charIdx];
+    if(buffer[charIdx] == '\n') {
+      print_buffer[charIdx] = '|';
+    }      
+    }*/
+  
+  printf("Num bytes received: %d. Message: %s\n", num_bytes, buffer); 
   buffer[num_bytes] = '\0';
   std::string message = std::string(buffer);
   return message;

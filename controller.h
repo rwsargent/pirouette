@@ -7,11 +7,14 @@
 
 #include <iostream>
 #include <memory>
-
+#include <vector>
 typedef struct Client {
   int socketfd;
 } Client;
 
-void listen_for_commands(std::unique_ptr<Client>);
+using namespace std;
 
+void listen_for_commands(std::unique_ptr<Client>);
+const vector<string> explode(const string& input, const char& delim);
+  
 #endif

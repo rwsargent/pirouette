@@ -18,16 +18,23 @@ int main(int argc, char** argv) {
   thread accept_thread;
   running = true;
 
+  if(argc != 2) {
+    printf("Usage: pirouette <hostname>\n");
+    return 0;
+  }
+  
   //init something to do with GPIO
 	init_GPIO();
   assignSignalHandlers();
   
   //init thread control?
-	server_socket_fd = init_client_socket(argv[1]);
-  unique_ptr<Client> webserver(new Client);
-  webserver->socketfd = server_socket_fd;
+  for(;;) {
+    	server_socket_fd = init_client_socket(argv[1]);
+      unique_ptr<Client> webserver(new Client);
+      webserver->socketfd = server_socket_fd;
   
-  listen_for_commands(std::move(webserver));
+      listen_for_commands(std::move(webserver));
+  }
   
   return 0;
 }
