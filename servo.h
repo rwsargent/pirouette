@@ -11,7 +11,7 @@
 #define TURN_RANGE 512
 #define STOP 0
 #define LEFT 77
-#define RIGHT 71
+#define RIGHT 70
 
 void turn_left();
 void turn_right();
